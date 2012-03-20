@@ -5,7 +5,7 @@
     ln -s ~/.vim/vimrc ~/.vimrc
     cd ~/.vim
     git submodule init
-    git submodule updat
+    git submodule update
 
 ## Upgrading all bundled plugins
 
