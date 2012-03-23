@@ -107,3 +107,8 @@ let g:NERDTreeWinPos="right"
 let NERDTreeHighlightCursorline=1
 map <F5> :NERDTreeToggle<CR>
 imap <F5> <ESC>:NERDTreeToggle<CR>
+
+" to work with tabs
+nmap <C-t> :tabnew<CR>
+nmap <C-i> :tabnext<CR>
+nmap <C-w> :tabclose<CR>
