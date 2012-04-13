@@ -81,6 +81,10 @@ function! SetColorscheme()
   let g:background_status = 1
 endfunction
 
+autocmd Filetype ruby,rb,rails,eruby set tw=110 colorcolumn=110 formatoptions=tcq
+
+set cursorcolumn
+
 if has("syntax")
   syntax enable
   silent! :call SetColorscheme()<CR>
