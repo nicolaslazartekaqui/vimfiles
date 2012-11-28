@@ -22,9 +22,6 @@
 [submodule "bundle/taglist.vim"]
 	path = bundle/taglist.vim
 	url = git://github.com/vim-scripts/taglist.vim.git
-[submodule "vim-bundler"]
-	path = vim-bundler
-	url = git://github.com/tpope/vim-bundler.git
 [submodule "bundle/fugitive"]
 	path = bundle/fugitive
 	url = git://github.com/tpope/vim-fugitive.git
