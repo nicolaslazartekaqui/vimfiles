@@ -1,5 +1,5 @@
 " to load submodules 
-call pathogen#runtime_append_all_bundles()
+call pathogen#infect()
 call pathogen#helptags()
 
 " to filetypes
@@ -72,18 +72,17 @@ set backspace=indent,eol,start
 " turn session global
 set sessionoptions+=globals
 
+autocmd Filetype ruby,rb,rails,eruby set tw=110 formatoptions=tcq
+
+set cursorcolumn
+
 " define color scheme
 function! SetColorscheme()
   set t_Co=256
   set background=dark
-  set colorcolumn=110
-  colorscheme xoria256
+  colorscheme ir_black
   let g:background_status = 1
 endfunction
-
-autocmd Filetype ruby,rb,rails,eruby set tw=110 colorcolumn=110 formatoptions=tcq
-
-set cursorcolumn
 
 if has("syntax")
   syntax enable

@@ -10,3 +10,12 @@
 ## Upgrading all bundled plugins
 
     git submodule foreach git pull origin master
+
+## Requisites
+
+    # aptitude install exuberant-ctags
+
+## Add other pluguin
+
+    $ git submodule add git://github.com/... bundle/...
+    $ git submodule init && git submodule update
