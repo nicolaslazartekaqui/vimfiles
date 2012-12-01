@@ -74,14 +74,12 @@ set sessionoptions+=globals
 
 autocmd Filetype ruby,rb,rails,eruby set tw=110 formatoptions=tcq
 
-set cursorcolumn
+"set cursorcolumn
 
 " define color scheme
 function! SetColorscheme()
   set t_Co=256
-  set background=dark
   colorscheme ir_black
-  let g:background_status = 1
 endfunction
 
 if has("syntax")
