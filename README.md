@@ -15,7 +15,14 @@
 
     # aptitude install exuberant-ctags
 
-## Add other pluguin
+## Add other plugin
 
     $ git submodule add git://github.com/... bundle/...
     $ git submodule init && git submodule update
+    
+## Delete plugin
+
+    $ git submodule deinit bundle/...
+    $ git rm bundle/...
+    $ vi .gitmodules
+    # remove modules path
