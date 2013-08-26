@@ -1,4 +1,4 @@
-# Vim files
+# Nícolas's vim files
 
 ## Install
     git clone git://github.com/nicolaslazartekaqui/vimfiles.git ~/.vim
