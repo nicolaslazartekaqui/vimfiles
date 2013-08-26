@@ -76,6 +76,10 @@ autocmd Filetype ruby,rb,rails,eruby set tw=110 formatoptions=tcq
 
 " set cursorcolumn
 
+" colorscheme
+set t_Co=256
+colorscheme railscasts
+
 " create Y like D
 nnoremap Y y$
 
