@@ -74,21 +74,7 @@ set sessionoptions+=globals
 
 autocmd Filetype ruby,rb,rails,eruby set tw=110 formatoptions=tcq
 
-"set cursorcolumn
-
-" define color scheme
-function! SetColorscheme()
-  set t_Co=256
-  colorscheme ir_black
-endfunction
-
-if has("syntax")
-  syntax enable
-  silent! :call SetColorscheme()<CR>
-  if has("folding")
-    set fillchars=diff:\ ,fold:\ ,vert:\ 
-  endif
-endif
+" set cursorcolumn
 
 " create Y like D
 nnoremap Y y$
