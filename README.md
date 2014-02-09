@@ -1,28 +1,22 @@
 # Nícolas's vim files
 
+## Clone
+   $  git clone git://github.com/nicolaslazartekaqui/vimfiles.git ~/.vim
+
+## Install neobundle
+    $ git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+
 ## Install
-    git clone git://github.com/nicolaslazartekaqui/vimfiles.git ~/.vim
+    $ vim +BundleUpdate +qall
     ln -s ~/.vim/vimrc ~/.vimrc
-    cd ~/.vim
-    git submodule init
-    git submodule update
 
 ## Upgrading all bundled plugins
-
-    git submodule foreach git pull origin master
+    $ vim +BundleUpdate +qall
 
 ## Requisites
 
     # aptitude install exuberant-ctags
 
-## Add other plugin
+## Add other plugin or remove plugin
 
-    $ git submodule add git://github.com/... bundle/...
-    $ git submodule init && git submodule update
-    
-## Delete plugin
-
-    $ git submodule deinit bundle/...
-    $ git rm bundle/...
-    $ vi .gitmodules
-    # remove modules path
+Add or remove line in `neobundle.vim`.
