@@ -22,6 +22,7 @@ NeoBundle 'bronson/vim-visual-star-search'
 NeoBundle 'mhinz/vim-signify'
 NeoBundle 'Keithbsmiley/rspec.vim'
 NeoBundle 'thoughtbot/vim-rspec'
+NeoBundle 'ervandew/supertab'
 
 " Kassio snippets
 NeoBundle 'MarcWeber/vim-addon-mw-utils'
