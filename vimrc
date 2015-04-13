@@ -52,15 +52,16 @@ set sessionoptions+=globals
 
 set fileformats+=mac
 
+set mouse=a
+
 let mapleader=','
 
 autocmd Filetype ruby,rb,rails,eruby set tw=110 formatoptions=tcq
 
 syntax enable
+filetype plugin indent on
+
 set t_Co=256
-set background=dark
-colorscheme railscasts
-set synmaxcol=500
 
 " Make Y like D
 nnoremap Y y$
@@ -108,13 +109,13 @@ let g:syntastic_error_symbol = 'e:'
 let g:syntastic_warning_symbol = 'w:'
 let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [
       \ 'ruby',
-      \ 'elixir',
       \ 'js',
       \ 'css',
       \ 'vim' ] }
 
 hi! link SyntasticWarningSign Search
 hi! link SyntasticErrorSign ErrorMsg
+
 let g:syntastic_stl_format = ""
       \ . "%W{"
       \ . "%#STLWarningAlert#"
@@ -126,6 +127,9 @@ let g:syntastic_stl_format = ""
       \ . "\ [".g:syntastic_error_symbol." %fe(%e)]"
       \ . "}\ "
       \ . "%*"
+
+let g:syntastic_javascript_checkers = ['jscs']
+let g:syntastic_scss_checkers = ['scss_lint']
 
 nnoremap <leader>sc :Errors<CR>
 
@@ -178,3 +182,8 @@ function! PreserveFN(fn, ...)
 
   return g:preservedReturn
 endfunction
+
+" to work with tabs
+nmap <C-t> :tabnew<CR>
+nmap <C-i> :tabnext<CR>
+nmap <C-w> :tabclose<CR>
