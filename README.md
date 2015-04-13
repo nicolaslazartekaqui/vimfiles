@@ -7,7 +7,7 @@
     $ ln -s ~/.vim/vimrc ~/.vimrc
 
 ## Upgrading all bundled plugins
-    $ vim +NeoBundleInstall +qall
+    $ vim +NeoBundleUpdate +qall
 
 ## Add other plugin or remove plugin
 

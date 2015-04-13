@@ -1,12 +1,14 @@
 source ~/.vim/neobundle.vim
 
 scriptencoding utf8
-
 set encoding=utf8 fileencoding=utf8 termencoding=utf8 nobomb
 
-set showmatch
+set number numberwidth=3
 
 runtime macros/matchit.vim
+set showmatch
+
+set ttyfast
 
 set confirm
 
@@ -16,68 +18,108 @@ set splitright splitbelow
 
 set incsearch hls ignorecase smartcase
 
+set formatoptions=tcwqn2
 set cursorline colorcolumn=80
+
+set t_Co=256
+syntax enable
+set synmaxcol=500
 
 set showcmd
 
 set switchbuf=useopen,usetab,newtab
+set tabpagemax=50
 
-set list listchars=tab:▸\ ,trail:·,nbsp:·
+set list listchars=tab:▸\ ,trail:·
 
 set virtualedit=block
 
-set diffopt+=iwhite
+set diffopt+=vertical
 
 set nowrap wrapscan showbreak=..
 
-set undolevels=1000
-
 set title
-
-set number numberwidth=3
 
 set autoread autowrite
 
 set autoindent copyindent cindent smartindent
-
 set tabstop=2 shiftwidth=2 softtabstop=2
-
 set expandtab smarttab shiftround
 
 set backspace=indent,eol,start
 
-set mousehide mouse= ttymouse=xterm2
+set mousehide mouse=a ttymouse=xterm2
 
-set sessionoptions+=globals
+set sessionoptions=buffers,tabpages,help
+
+set nobackup nowritebackup noswapfile
 
 set fileformats+=mac
 
-set mouse=a
-
 let mapleader=','
 
-autocmd Filetype ruby,rb,rails,eruby set tw=110 formatoptions=tcq
+" persist undo
+set undofile undolevels=1000 undoreload=10000 undodir=~/.vim_data/undo
 
-syntax enable
-filetype plugin indent on
+aug undo_dir
+  au!
+  au FileType gitcommit setlocal noundofile
+  au VimEnter *
+        \ if !isdirectory(&undodir) |
+        \   call mkdir(expand(&undodir), "p", 0700) |
+        \ endif
+aug END
 
-set t_Co=256
+" filetypes setup
+aug keyword
+  au!
+  au FileType html,javascript,css,eruby,sass,scss,yaml setlocal
+        \ iskeyword+=-
+aug END
 
-" Make Y like D
+" rspec syntax for features
+aug rspec_syntax_for_features
+  au!
+  autocmd BufReadPost,BufNewFile *_feature.rb set syntax=rspec
+aug END
+
+" trim
+function! Trim()
+  let l:hls = &hls
+  setlocal nohls
+  call Preserve('%s/\v\s+$//e')
+  call Preserve('%s/\v($\n\s*)+%$//e')
+  let &hls = l:hls
+endfunction
+command! Trim call Trim()
+
+function! Preserve(command)
+  setlocal lazyredraw
+  let l:search=@/
+
+  let last_view = winsaveview()
+  silent execute a:command
+  call winrestview(last_view)
+
+  let @/=l:search
+  redraw
+  setlocal nolazyredraw
+endfunction
+
+" keymaps
 nnoremap Y y$
-
-" Make <C-l> clear the highlight
 nnoremap <silent> <C-l> :nohls<CR>
-
-" Indent all file
 noremap <silent> <leader>ff :call Preserve('normal gg=G')<CR>
+nmap <C-t> :tabnew<CR>
+nmap <C-i> :tabnext<CR>
+nmap <C-w> :tabclose<CR>
 
-" fixing some commands
 cab W  w
 cab Wq wq
 cab wQ wq
 cab WQ wq
 cab Q  q
+
 
 " NERDTree
 let NERDTreeWinPos="right"
@@ -85,7 +127,6 @@ let NERDTreeHighlightCursorline=1
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeMinimalUI=1
 
-" If possible open a NERDTreeMirror
 function! OpenNERDTreeMirror()
   try
     :NERDTreeToggle | NERDTreeMirror
@@ -98,92 +139,46 @@ endfunction
 
 nmap <silent> <F5> :call OpenNERDTreeMirror()<CR>
 nnoremap <silent> <leader>fl :NERDTreeFind<CR>
-command! E exec ":NERDTree ".expand('%:p')
 
-autocmd BufReadPost,BufNewFile *_feature.rb set syntax=rspec
-
+" syntastic
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_balloons = 0
 let g:syntastic_auto_jump = 0
 let g:syntastic_error_symbol = 'e:'
 let g:syntastic_warning_symbol = 'w:'
 let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [
-      \ 'ruby',
-      \ 'js',
       \ 'css',
-      \ 'vim' ] }
-
-hi! link SyntasticWarningSign Search
-hi! link SyntasticErrorSign ErrorMsg
+      \ 'eruby',
+      \ 'javascript',
+      \ 'ruby',
+      \ 'scss',
+      \ 'sh',
+      \ 'yaml'
+      \ ] }
 
 let g:syntastic_stl_format = ""
       \ . "%W{"
-      \ . "%#STLWarningAlert#"
-      \ . "\ [".g:syntastic_warning_symbol." %fw(%w)]"
+      \ . "[" . g:syntastic_warning_symbol . " %fw(%w)]"
       \ . "}"
-      \ . "%B{\ }"
       \ . "%E{"
-      \ . "%#STLErrorAlert#"
-      \ . "\ [".g:syntastic_error_symbol." %fe(%e)]"
-      \ . "}\ "
-      \ . "%*"
+      \ . "[" . g:syntastic_error_symbol . " %fe(%e)]"
+      \ . "}"
 
-let g:syntastic_javascript_checkers = ['jscs']
 let g:syntastic_scss_checkers = ['scss_lint']
+let g:syntastic_javascript_checkers = ['jscs']
 
-nnoremap <leader>sc :Errors<CR>
-
+" tabularize
 vnoremap ,a= :Tabularize /=<CR>
 nnoremap ,a= :normal vir,a=<CR>
 cnoreabbrev Tab Tabularize
 
-let g:keep_trailing_spaces = 0
-command! -nargs=? KeepTrailingSpaces
-      \ if <q-args> == "" |
-      \   let g:keep_trailing_spaces = 1 |
-      \ else |
-      \   let g:keep_trailing_spaces = str2nr(<q-args>) |
-      \ endif
+" airline
+set laststatus=2
 
-aug remove_trailing_spaces
-  au!
-  au BufWritePre *
-        \ if ! g:keep_trailing_spaces |
-        \   call Preserve('%s/\s\+$//e') |
-        \   call Preserve('%s/\v($\n\s*)+%$//e') |
-        \ endif
-aug END
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
 
-" Executes a command and keeps the current view
-function! Preserve(command)
-  setlocal lazyredraw
-  let last_search=@/
-
-  let last_view = winsaveview()
-  silent execute a:command
-  call winrestview(last_view)
-
-  let @/=last_search
-  redraw
-  setlocal nolazyredraw
-endfunction
-
-" Executes a global function and keeps the current view
-function! PreserveFN(fn, ...)
-  if a:0
-    let args = "(".join(a:000, ",").")"
-  else
-    let args = "()"
-  end
-  let func = string(function(a:fn))
-
-  call Preserve("let g:preservedReturn =
-  ".func.args)
-
-  return g:preservedReturn
-endfunction
-
-" to work with tabs
-nmap <C-t> :tabnew<CR>
-nmap <C-i> :tabnext<CR>
-nmap <C-w> :tabclose<CR>
+let g:airline_left_sep = '▶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_right_sep = '◀'

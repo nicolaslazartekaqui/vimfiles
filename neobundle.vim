@@ -1,20 +1,31 @@
 if has('vim_starting')
   set nocompatible
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+  set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle'))
+
 NeoBundleFetch 'Shougo/neobundle.vim'
+
+" plugins
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'wellbredgrapefruit/tomdoc.vim'
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'ervandew/supertab'
+NeoBundle 'mhinz/vim-signify'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'bling/vim-airline'
+
+NeoBundleLazy 'othree/html5.vim', {'autoload': {'filetypes': ['html']}}
+NeoBundleLazy 'Keithbsmiley/rspec.vim', {'autoload': {'filetypes': ['ruby']}}
+NeoBundleLazy 'jelera/vim-javascript-syntax', {
+      \ 'autoload': { 'filetypes': ['javascript', 'html'] }
+      \ }
+
 call neobundle#end()
 
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'Keithbsmiley/rspec.vim'
-NeoBundle 'ervandew/supertab'
-NeoBundle 'airblade/vim-gitgutter'
-
 filetype plugin indent on
+
 NeoBundleCheck
