@@ -106,6 +106,11 @@ function! Preserve(command)
   setlocal nolazyredraw
 endfunction
 
+aug remove_trailing_spaces
+  au!
+  au BufWritePre * call Trim()
+aug END
+
 " keymaps
 nnoremap Y y$
 nnoremap <silent> <C-l> :nohls<CR>
@@ -119,7 +124,6 @@ cab Wq wq
 cab wQ wq
 cab WQ wq
 cab Q  q
-
 
 " NERDTree
 let NERDTreeWinPos="right"

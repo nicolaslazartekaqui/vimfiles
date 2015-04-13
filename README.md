@@ -12,3 +12,5 @@
 ## Add other plugin or remove plugin
 
 Add or remove line in `neobundle.vim`.
+
+Many configs/scripts is ⌘-c/⌘-v from [kassio/vimfiles](https://github.com/kassio/vimfiles), tnks! =)
